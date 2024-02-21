@@ -3,9 +3,10 @@
 For Sync3 
 
 > [!WARNING]
-> Tested only on 3.4.23188
+> Work only on IPMB & 360 &3.4.23188
 > 
-> Support ONLY IPMB & 360 !
+> Mod not tested by autoInstall, manual code change - work
+> 
 
 If you click on the *bottom half* of the screen, the camera switches
 
