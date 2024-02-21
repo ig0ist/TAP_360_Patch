@@ -93,18 +93,7 @@ RVCBasePopup {
 
     function setNewCameraStatus()
     {
-        // showFrontCamera
         var setCamera = false;
-        var reverse=false;
-        // if (AL2HMIBridge.globalSource.transmissionStatus !== AL2HMIBridge.GlobalSource.TransmissionStatusReverse) {
-        //     // NOT Reverse
-        //     reverse=false;
-        // } else {
-        //     // Reverse
-        //     reverve=true;
-        // }
-        console.log("RVC_CLICK! REVERSE = ",reverse);
-        console.log("RVC_CLICK! currentShowing - ",AL2HMIBridge.rvcSource.multicameraShowing);
 
         switch (AL2HMIBridge.rvcSource.multicameraShowing) {
             // Front
@@ -119,13 +108,9 @@ RVCBasePopup {
             default:
                 break;
         }
-
-        console.log("RVC_CLICK! setCamera = ",setCamera);
         if (setCamera) {
             _hmirvcController.selectRVCView(setCamera)
         }
-
-
     }
 
     rootPopupContents: Item {
@@ -260,19 +245,11 @@ RVCBasePopup {
 
         Rectangle {
             id: redBTT
-            // anchors.left: parent.left
-            // anchors.right: parent.right
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             width: parent.width
             height: parent.height / 2
             color: "transparent"
-            // anchors.bottom: parent.bottom
-            // anchors.centerIn : parent
-            // anchors.baseline: parent.verticalCenter;
-            // anchors.verticalCenterOffset: -parent.height / 4
-            // anchors.verticalCenter: -parent.height / 2
-            // color: "red"
 
             MouseArea {
                 anchors.fill: parent
