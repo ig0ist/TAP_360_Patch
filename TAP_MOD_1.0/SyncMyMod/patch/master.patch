@@ -1,0 +1,135 @@
+--- /fs/mp/fordhmi/qml/hmirvc/RVCPopup.qml
++++ /fs/mp/fordhmi/qml/hmirvc/RVCPopup.qml
+@@ -81,6 +81,33 @@
+                                     AL2HMIBridge.rvcSource.multicameraShowing !== AL2HMIBridge.RVCSource.IPMBFrontSplit)
+     property bool cameraViewActivatedByReverseGear : AL2HMIBridge.rvcSource.cameraActivationReason === AL2HMIBridge.RVCSource.CameraActivationReasonReverseGear
+
++
++    // ---------- MOD TAP_360 Start ---------------
++    function setNewCameraStatus()
++    {
++        var setCamera = false;
++
++        switch (AL2HMIBridge.rvcSource.multicameraShowing) {
++            // Front
++            case AL2HMIBridge.RVCSource.IPMBFront360: setCamera = AL2HMIBridge.RVCSource.IPMBFrontNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBFrontNormal: setCamera = AL2HMIBridge.RVCSource.IPMBFrontSplit; break;
++            case AL2HMIBridge.RVCSource.IPMBFrontSplit: setCamera = AL2HMIBridge.RVCSource.IPMBFrontNormal; break;
++            // Rear
++            case AL2HMIBridge.RVCSource.IPMBRear360: setCamera = AL2HMIBridge.RVCSource.IPMBRearNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBRearSplit: setCamera = AL2HMIBridge.RVCSource.IPMBRearNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBRear: setCamera = AL2HMIBridge.RVCSource.IPMBRearSplit; break;
++            case AL2HMIBridge.RVCSource.IPMBRearNormal: setCamera = AL2HMIBridge.RVCSource.IPMBRearSplit; break;
++            default:
++                break;
++        }
++        if (setCamera) {
++            _hmirvcController.selectRVCView(setCamera)
++        }
++    }
++    // ---------- END MOD TAP_360 Start ---------------
++
++
++
+     rootPopupContents: Item {
+         id: container
+
+@@ -181,6 +208,24 @@
+             anchors.rightMargin: root.show360View ? 350 : 0
+         }
+
++
++        Rectangle {
++            id: redBTT
++            anchors.right: parent.right
++            anchors.bottom: parent.bottom
++            width: parent.width
++            height: parent.height / 2
++            color: "transparent"
++
++            MouseArea {
++                anchors.fill: parent
++                onClicked: {
++                    setNewCameraStatus();
++                }
++            }
++        }
++
++
+         HmiImage {
+             anchors.centerIn : parent
+             anchors.verticalCenterOffset: -parent.height / 4
+--- /fs/mp/fordhmi/qml/hmirvc/+10inchL/RVCPopup.qml
++++ /fs/mp/fordhmi/qml/hmirvc/+10inchL/RVCPopup.qml
+@@ -48,6 +48,7 @@
+             return _rVCPopupStyle.parkAidSwitchLeftMargin; //if PDC image is displayed, park aid button is next to it
+     }
+
++
+     transparentWindow: true
+
+     property bool apaCsiActive: AL2HMIBridge.rvcSource.driverAssistConfiguration === AL2HMIBridge.RVCSource.RearFrontPDCWithAPACSI
+@@ -89,6 +90,31 @@
+                                     AL2HMIBridge.rvcSource.multicameraShowing !== AL2HMIBridge.RVCSource.IPMBFrontSplit)
+     property bool cameraViewActivatedByReverseGear : AL2HMIBridge.rvcSource.cameraActivationReason === AL2HMIBridge.RVCSource.CameraActivationReasonReverseGear
+
++
++    // ---------- MOD TAP_360 Start ---------------
++    function setNewCameraStatus()
++    {
++        var setCamera = false;
++
++        switch (AL2HMIBridge.rvcSource.multicameraShowing) {
++            // Front
++            case AL2HMIBridge.RVCSource.IPMBFront360: setCamera = AL2HMIBridge.RVCSource.IPMBFrontNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBFrontNormal: setCamera = AL2HMIBridge.RVCSource.IPMBFrontSplit; break;
++            case AL2HMIBridge.RVCSource.IPMBFrontSplit: setCamera = AL2HMIBridge.RVCSource.IPMBFrontNormal; break;
++            // Rear
++            case AL2HMIBridge.RVCSource.IPMBRear360: setCamera = AL2HMIBridge.RVCSource.IPMBRearNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBRearSplit: setCamera = AL2HMIBridge.RVCSource.IPMBRearNormal; break;
++            case AL2HMIBridge.RVCSource.IPMBRear: setCamera = AL2HMIBridge.RVCSource.IPMBRearSplit; break;
++            case AL2HMIBridge.RVCSource.IPMBRearNormal: setCamera = AL2HMIBridge.RVCSource.IPMBRearSplit; break;
++            default:
++                break;
++        }
++        if (setCamera) {
++            _hmirvcController.selectRVCView(setCamera)
++        }
++    }
++    // ---------- END MOD TAP_360 Start ---------------
++
+     rootPopupContents: Item {
+         id: container
+
+@@ -219,6 +245,23 @@
+             anchors.rightMargin: (root.show360View && AL2HMIBridge.rvcSource.hasDigitalRVC)? 560 : 0
+         }
+
++        Rectangle {
++            id: redBTT
++            anchors.right: parent.right
++            anchors.bottom: parent.bottom
++            width: parent.width
++            height: parent.height / 2
++            color: "transparent"
++
++            MouseArea {
++                anchors.fill: parent
++                onClicked: {
++                    setNewCameraStatus();
++                }
++            }
++        }
++
++
+         HmiImage {
+             anchors.centerIn : parent
+             anchors.verticalCenterOffset: -parent.height / 4
+@@ -226,6 +269,7 @@
+             visible: AL2HMIBridge.rvcSource.rearCameraOnDemandActive
+             source: UiTheme.palette.image("rvc/rvcod_overlay");
+
++
+             RVCTextLabel {
+                 anchors.fill: parent
+
